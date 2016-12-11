@@ -1,3 +1,6 @@
 [submodule "bokehjs"]
 	path = bokehjs
 	url = git://github.com/bokeh/bokeh.git
+[submodule "bokeh"]
+	path = bokeh
+	url = https://github.com/drachimera/bokeh.git
