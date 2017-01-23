@@ -270,7 +270,7 @@ class nsfgTest extends FlatSpec with Matchers {
     println(weightsmap)
     var maxcount = Long.MinValue
     for( next <- weightsmap.values){
-      val nexti = next.asInstanceOf[Int]
+      val nexti = next.asInstanceOf[Long]
       if( nexti > maxcount){
         maxcount = nexti
       }
