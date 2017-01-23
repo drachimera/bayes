@@ -1,0 +1,7 @@
+infile dictionary {
+    _column(1)      str12                             A  %12s  "RESPONDENT ID NUMBER"
+   _column(13)       byte                           B   %2f  "PREGNANCY ORDER (NUMBER)"
+   _column(15)        int                           C   %4f  "CM FOR PREGNANCY END DATE (IF NONLIVEBIRTH)"
+  _column(31)      float                            D  %18f  "BASE WEIGHT"
+  _column(47)     double                    E  %18f  "ADJUSTED MODIFIED BASE WEIGHT"
+}
