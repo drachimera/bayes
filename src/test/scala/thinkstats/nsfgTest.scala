@@ -266,16 +266,26 @@ class nsfgTest extends FlatSpec with Matchers {
     val weightsdf = thinkStats.valueCounts(df,"finalwgt")
     val maxwt = thinkStats.max(df, "finalwgt")
     println(maxwt)
+    maxwt.getOrElse(null) should be (261879.9538641063)
     val weightsmap = thinkStats.map(weightsdf,"finalwgt", "count")
     println(weightsmap)
+    var maxwthm = Double.MinValue
     var maxcount = Long.MinValue
-    for( next <- weightsmap.values){
-      val nexti = next.asInstanceOf[Long]
-      if( nexti > maxcount){
-        maxcount = nexti
+    for( (k,v) <- weightsmap){
+      //println("k:"+k+",v:"+v)
+      val nextk = k.asInstanceOf[Double]
+      val nextv = v.asInstanceOf[Long]
+      if( nextv > maxcount){
+        maxcount = nextv
+      }
+      if(nextk > maxwthm){
+        maxwthm = nextk
       }
     }
-   maxcount should be (6)
+   maxwthm should be (261879.9538641063)
+   maxcount should be (19)
+   weightsmap.get(261879.9538641063).getOrElse(null) should be (6)
+
 
     //this is how you can look at all variables
     df.describe().show()

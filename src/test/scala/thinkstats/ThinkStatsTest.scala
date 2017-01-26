@@ -89,7 +89,11 @@ class ThinkStatsTest extends FlatSpec with Matchers {
     map.get("E350").getOrElse(null) should be (31020.652499999997)
     map.get("Volt").getOrElse(null) should be (31059.171000000002)
 
-    thinkstats.max(outdf4, "finalcost") should be (57000.0)
+    thinkstats.count(outdf4, "finalcost") should be (3)
+    thinkstats.max(outdf4, "finalcost").getOrElse(null) should be (57000.0)
+    thinkstats.min(outdf4, "finalcost").getOrElse(null) should be (31020.652499999997)
+    thinkstats.mean(outdf4, "finalcost").getOrElse(null) should be (39693.2745)
+    thinkstats.stddev(outdf4, "finalcost").getOrElse(null) should be (14988.07631312215)
 
   }
 

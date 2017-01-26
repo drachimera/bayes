@@ -14,6 +14,7 @@ import scala.collection
 import scala.collection.Map
 import scala.collection.mutable.ArrayBuffer
 import scala.collection.parallel.mutable
+import scala.util.Try
 
 /**
  * Created by m102417 on 12/23/16.
@@ -152,6 +153,12 @@ class ThinkStats {
     df.withColumn( field, df(field).cast(tpe) )
   }
 
+  def count(df:DataFrame, field:String): Int = {
+    val mx = map(df.describe(field), "summary", field)
+    val db = mx.get("count").getOrElse(null)
+    return Integer.parseInt(db.toString)
+  }
+
   /**
    * Calculates the max value for a given column
    * Note: this is the most direct way to calculate max, but its not efficent if we want to
@@ -164,10 +171,32 @@ class ThinkStats {
    * @param field
    * @return
    */
-  def max(df:DataFrame, field:String) : Any = {
-    val max = valueCounts(df, field).rdd.map(row => (row(0), 1)).reduceByKey(math.max(_, _)).take(1)(0)._1
-    return max
+  def max(df:DataFrame, field:String) : Option[Double] = {
+    val mx = map(df.describe(field), "summary", field)
+    val db = mx.get("max").getOrElse(null)
+    return parseDouble(db.toString())
   }
 
+  def min(df:DataFrame, field:String) : Option[Double] = {
+    val mx = map(df.describe(field), "summary", field)
+    val db = mx.get("min").getOrElse(null)
+    return parseDouble(db.toString())
+  }
+
+  def mean(df:DataFrame, field:String) : Option[Double] = {
+    val mx = map(df.describe(field), "summary", field)
+    val db = mx.get("mean").getOrElse(null)
+    return parseDouble(db.toString())
+  }
+
+  def stddev(df:DataFrame, field:String) : Option[Double] = {
+    val mx = map(df.describe(field), "summary", field)
+    val db = mx.get("stddev").getOrElse(null)
+    return parseDouble(db.toString())
+  }
+
+
+
+  def parseDouble(s: String): Option[Double] = Try { s.toDouble }.toOption
 
 }
